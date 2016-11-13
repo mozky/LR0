@@ -4,8 +4,8 @@ A JS LR(0) parser. Supports multiple files to test strings.
 
 ## How to use
 
-npm install
-node index.js
+- `npm install`
+- `node index.js`
 
 ## Examples
 
