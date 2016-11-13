@@ -15,21 +15,22 @@ function LR0(GRAM, ACCI, CADENA) {
     // Caso desplazamiento
     if (accion.charAt(0) == "d") {
       pila.push(CADENA[flecha]);
-      pila.push("I" + accion.charAt(1));
+      pila.push("I" + accion.slice(1));
       flecha++;
     }
     // Caso reduccion
     if (accion.charAt(0) == "r") {
       // Hacemos la reduccion, quitamos dos elementos de la fila por cada elemento de la produccion
-      for (var i = 0; i < GRAM[accion.charAt(1)].cion.length; i++) {
+      for (var i = 0; i < GRAM[accion.slice(1)].cion.length; i++) {
         pila.pop();
         pila.pop();
       }
-      pila.push(GRAM[accion.charAt(1)].tor);
-      pila.push(ACCI[pila[pila.length-2].charAt(1)][pila[pila.length-1]])
+      pila.push(GRAM[accion.slice(1)].tor);
+      pila.push(ACCI[pila[pila.length-2].slice(1)][pila[pila.length-1]])
     }
     // Actualizamos el estado y la accion
-    estado = pila[pila.length-1].charAt(1);
+    console.log("PILAAA", pila.toString(), pila.length)
+    estado = pila[pila.length-1].slice(1);
     accion = ACCI[estado][CADENA[flecha]];
 
   }
