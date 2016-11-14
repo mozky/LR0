@@ -70,17 +70,23 @@ fs.readdir(testFolder, (err, files) => {
       //Quitamos espacios en blanco
       var cadena = result.Cadena.replace(/\s/g,'');
 
-      // Hack para aceptar int a=123
-      cadena = cadena.replace(/int/g, "iat");
-      cadena = cadena.replace(/\d+/g, "b");
+      // Analizador lexico int a = [0-9]
+      if (cadena.includes("int")) {
+        cadena = cadena.replace(/int/g, "iat");
+        cadena = cadena.replace(/\d+/g, "b");
+      }
 
-      // Hack para aceptar for(x,y,z)
-      cadena = cadena.replace(/for/g, "w");
-      cadena = cadena.replace(/\({1}.+\;{1}.+\;{1}.+\){1}/g, "(a;a;a)");
+      // Analizador lexico for(x;y;z)
+      if (cadena.includes("for")) {
+        cadena = cadena.replace(/for/g, "w");
+        cadena = cadena.replace(/\({1}.+\;{1}.+\;{1}.+\){1}/g, "(a;a;a)");
+      }
 
-      // Hack para aceptar while(a != 34)
-      cadena = cadena.replace(/while/g, "w");
-      cadena = cadena.replace(/\({1}.+\){1}/g, "(a;a)");
+      // Analizador lexico while(x)
+      if (cadena.includes("while")) {
+        cadena = cadena.replace(/while/g, "w");
+        cadena = cadena.replace(/\({1}.+\){1}/g, "(a;a)");
+      }
 
       LR0(arch.GRAM, arch.ACCI, cadena + "$") ?
         console.log("\nCADENA VALIDA (" + result.Cadena + ")") :
