@@ -66,7 +66,23 @@ fs.readdir(testFolder, (err, files) => {
     var arch = require('./examples/'+ result.Archivo);
     console.log("\n" + arch.INFO + "\n\n" + "Teclea la cadena a evaluar: ");
     prompt.get('Cadena', function (err, result) {
-      LR0(arch.GRAM, arch.ACCI, result.Cadena + "$") ?
+
+      //Quitamos espacios en blanco
+      var cadena = result.Cadena.replace(/\s/g,'');
+
+      // Hack para aceptar int a=123
+      cadena = cadena.replace(/int/g, "iat");
+      cadena = cadena.replace(/\d+/g, "b");
+
+      // Hack para aceptar for(x,y,z)
+      cadena = cadena.replace(/for/g, "w");
+      cadena = cadena.replace(/\({1}.+\;{1}.+\;{1}.+\){1}/g, "(a;a;a)");
+
+      // Hack para aceptar while(a != 34)
+      cadena = cadena.replace(/while/g, "w");
+      cadena = cadena.replace(/\({1}.+\){1}/g, "(a;a)");
+
+      LR0(arch.GRAM, arch.ACCI, cadena + "$") ?
         console.log("\nCADENA VALIDA (" + result.Cadena + ")") :
         console.log("\nCADENA NO VALIDA (" + result.Cadena + ")");
     });
