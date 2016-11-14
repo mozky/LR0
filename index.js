@@ -29,7 +29,6 @@ function LR0(GRAM, ACCI, CADENA) {
       pila.push(ACCI[pila[pila.length-2].slice(1)][pila[pila.length-1]])
     }
     // Actualizamos el estado y la accion
-    console.log("PILAAA", pila.toString(), pila.length)
     estado = pila[pila.length-1].slice(1);
     accion = ACCI[estado][CADENA[flecha]];
 
